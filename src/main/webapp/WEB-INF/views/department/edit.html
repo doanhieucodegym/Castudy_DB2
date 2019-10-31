@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/department/layout ::head">
+    <title>Edit Department</title>
+</head>
+<body>
+<h1>Edit Department</h1>
+<p>
+    <a href="/departments"> Go Department list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<div id="form">
+    <form th:action="@{/edit-department}" th:object="${department}" method="post">
+        <input th:type="hidden" name="id" th:field="*{id}">
+        <table id="customers">
+            <tr>
+                <td>Name</td>
+                <td><input type="text"th:field="*{name}"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Edit department"></td>
+            </tr>
+        </table>
+            </table>
+    </form>
+</div>
+<footer th:replace="/department/layout ::footer"></footer>
+</body>
+</html>
