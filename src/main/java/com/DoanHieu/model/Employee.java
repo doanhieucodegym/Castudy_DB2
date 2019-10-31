@@ -37,6 +37,15 @@ public class Employee {
         this.salary = salary;
     }
 
+    public Employee(String name, LocalDate birthDate, String address, String avatar, Double salary, Department department) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.avatar = avatar;
+        this.salary = salary;
+        this.department = department;
+    }
+
     public Long getId() {
         return id;
     }

@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -48,6 +49,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan("com.DoanHieu")
 @EnableJpaRepositories("com.DoanHieu.repository")
+@PropertySource("classpath:global_config_app.properties")
+@EnableSpringDataWebSupport
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     //
 
@@ -151,6 +154,32 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         registry.addFormatter(new StringToLocalDateFormatter());
     }
     //
+    //Config FileUpload
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver getResolver() throws IOException {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+
+        //Set the maximum allowed size (in bytes) for each individual file.
+        resolver.setMaxUploadSizePerFile(5242880);//5MB
+
+        //You may also set other available properties.
+
+        return resolver;
+    }
+    //
+    // Cấu hình để sử dụng các file nguồn tĩnh (css, image, js..)
+    @Autowired
+    Environment env;
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        String fileUpload = env.getProperty("file_upload").toString();
+
+        // Image resource.
+        registry.addResourceHandler("/i/**") //
+                .addResourceLocations("file:" + fileUpload);
+
+    }
 
 
 

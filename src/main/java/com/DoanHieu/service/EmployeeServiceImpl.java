@@ -4,6 +4,8 @@ import com.DoanHieu.model.Department;
 import com.DoanHieu.model.Employee;
 import com.DoanHieu.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -33,5 +35,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Iterable<Employee> finAllByDepartment(Department department) {
         return employeeRepository.findAllByDepartment(department);
+    }
+
+    @Override
+    public Page<Employee> findAll(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Employee> findAllByNameContaining(String name, Pageable pageable) {
+        return employeeRepository.findAllByNameContaining(name,pageable);
     }
 }
